@@ -36,7 +36,7 @@ const Portfolio = () => {
     setIsViewerOpen(false);
   };
 
-  if (loading) return <div className="text-center text-white">Loading...</div>;
+ 
   if (error) return <div className="text-center text-white">Error: {error}</div>;
 
   return (
