@@ -10,20 +10,28 @@ const Portfolio = () => {
   const [isViewerOpen, setIsViewerOpen] = useState(false);
   const [selectedPortfolio, setSelectedPortfolio] = useState(null);
 
-  useEffect(() => {
-    const fetchPortfolios = async () => {
-      try {
-        const response = await axios.get('https://yousab-tech.com/webapp/public/api/portfolios');
-        setPortfolios(response.data.data.portfolios);
-        setLoading(false);
-      } catch (err) {
-        setError(err.message);
-        setLoading(false);
-      }
-    };
+ useEffect(() => {
+  const fetchPortfolios = async () => {
+    try {
+      const response = await axios.get(
+        "https://yousab-tech.com/webapp/public/api/portfolios",
+        {
+          headers: {
+            locale: "en",
+          },
+        }
+      );
+      setPortfolios(response.data.data.portfolios);
+      setLoading(false);
+    } catch (err) {
+      setError(err.message);
+      setLoading(false);
+    }
+  };
 
-    fetchPortfolios();
-  }, []);
+  fetchPortfolios();
+}, []);
+
 
   const openImageViewer = (portfolio) => {
     setSelectedPortfolio(portfolio);
