@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom"; // Needed if you're using routing
 import axios from "axios";
 import ImageViewer from "react-simple-image-viewer";
 import { motion } from "framer-motion";
-
+import { Link } from 'react-router-dom';
 const SinglePortfolio = () => {
   const { id } = useParams(); // only works with routing
   const [portfolio, setPortfolio] = useState(null);
@@ -58,6 +58,9 @@ const SinglePortfolio = () => {
 
   return (
     <div className="py-5 px-4" style={{ backgroundColor: "#12183A", minHeight: "100vh" }}>
+      <Link to="/" className="btn btn-outline-light mb-4">
+        ← Back to Portfolio List
+      </Link>
       <motion.h1
         className="text-center mb-4"
         style={{
@@ -76,10 +79,44 @@ const SinglePortfolio = () => {
         transition={{ duration: 0.8 }}
       >
         {portfolio.title}
+
+
       </motion.h1>
 
       {portfolio.description && (
         <p className="text-white text-center mb-5">{portfolio.description}</p>
+      )}
+
+      {portfolio.link && portfolio.type_id && (
+        <motion.a
+          href={portfolio.link}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="btn d-block mx-auto mb-5"
+          style={{
+            background: 'linear-gradient(to right, #3098FE, #9C46FF, #FF2DFF)',
+            border: 'none',
+            color: '#fff',
+            fontWeight: 'bold',
+            padding: '12px 20px',
+            borderRadius: '8px',
+            boxShadow: '0 0 10px rgba(255, 45, 255, 0.3)',
+            textAlign: 'center',
+            textTransform: 'uppercase',
+            letterSpacing: '0.5px',
+            width: '200px',
+          }}
+          whileHover={{
+            scale: 1.05,
+            boxShadow: '0 0 20px rgba(255, 45, 255, 0.5)',
+          }}
+        >
+          {portfolio.type_id === 1
+            ? "Download"
+            : portfolio.type_id === 2
+              ? "Browse"
+              : "Visit"}
+        </motion.a>
       )}
 
       <div className="row">
@@ -88,11 +125,18 @@ const SinglePortfolio = () => {
             <motion.img
               src={img.url}
               alt={`Portfolio Image ${index + 1}`}
-              className="img-fluid rounded shadow-sm"
-              style={{ cursor: "pointer", height: "250px", objectFit: "cover", width: "100%" }}
+              className="img-fluid rounded shadow-sm w-100"
+              style={{
+                cursor: "pointer",
+                height: "auto",
+                maxWidth: "100%",
+                maxHeight: "500px", // Limit height on larger screens
+                objectFit: "contain",
+              }}
               whileHover={{ scale: 1.03 }}
               onClick={() => openImageViewer(index)}
             />
+
           </div>
         ))}
       </div>

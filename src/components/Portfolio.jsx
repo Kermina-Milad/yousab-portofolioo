@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import ImageViewer from "react-simple-image-viewer";
 import { motion } from "framer-motion";
-
+import { Link } from 'react-router-dom';
 const Portfolio = () => {
   const [portfolios, setPortfolios] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -113,9 +113,8 @@ const Portfolio = () => {
                   rotate: [0, -1, 1, 0],
                 }}
                 transition={{ duration: 0.4 }}
-                onClick={() => openImageViewer(portfolio)}
               >
-                {portfolio.images && portfolio.images.length > 0 && (
+                {portfolio.images?.[0] && (
                   <img
                     src={portfolio.images[0].url}
                     className="card-img-top"
@@ -124,26 +123,91 @@ const Portfolio = () => {
                   />
                 )}
                 <div className="card-body">
-                  <h5
-                    className="card-title"
-                    style={{
-                      background:
-                        "linear-gradient(to left, #3098FE, #4A64E5, #9C46FF, #C139FF, #DE3CFF, #FF2DFF)",
-                      WebkitBackgroundClip: "text",
-                      backgroundClip: "text",
-                      color: "transparent",
-                      fontWeight: "bold",
-                    }}
-                  >
-                    {portfolio.title}
-                  </h5>
-                  <p className="card-text text-white-50">
-                    {portfolio.description || "No description available"}
-                  </p>
+                  {/* Only the title links to single portfolio */}
+                  <Link to={`/portfolio/${portfolio.id}`} style={{ textDecoration: 'none' }}>
+                    <h5
+                      className="card-title"
+                      style={{
+                        background:
+                          "linear-gradient(to left, #3098FE, #4A64E5, #9C46FF, #C139FF, #DE3CFF, #FF2DFF)",
+                        WebkitBackgroundClip: "text",
+                        backgroundClip: "text",
+                        color: "transparent",
+                        fontWeight: "bold",
+                        whiteSpace: "nowrap",           // Prevent line break
+                        overflow: "hidden",             // Hide overflowed text
+                        textOverflow: "ellipsis",       // Add ellipsis (...)
+                        display: "block",               // Required for ellipsis to work on <h5>
+                      }}
+                    >
+                      {portfolio.title}
+                    </h5>
+
+                  </Link>
+
+                  {/* External Link Button */}
+                  {portfolio.link && portfolio.type_id && (
+                    <motion.a
+                      href={portfolio.link}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="btn w-100 mt-3"
+                      style={{
+                        background: 'linear-gradient(to right, #3098FE, #9C46FF, #FF2DFF)',
+                        border: 'none',
+                        color: '#fff',
+                        fontWeight: 'bold',
+                        padding: '10px 16px',
+                        borderRadius: '8px',
+                        boxShadow: '0 0 10px rgba(255, 45, 255, 0.3)',
+                        textAlign: 'center',
+                        textTransform: 'uppercase',
+                        letterSpacing: '0.5px'
+                      }}
+                      whileHover={{
+                        scale: 1.05,
+                        boxShadow: '0 0 20px rgba(255, 45, 255, 0.5)',
+                      }}
+                      onClick={(e) => e.stopPropagation()}
+                    >
+                      {portfolio.type_id === 1 ? "Download" : portfolio.type_id === 2 ? "Browse" : "Visit"}
+                    </motion.a>
+                  )}
+
+                  {/* Show Images Button */}
+                  {portfolio.images?.length > 0 && (
+                    <motion.button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        openImageViewer(portfolio);
+                      }}
+                      className="btn w-100 mt-2"
+                      style={{
+                        background: 'linear-gradient(to right, #4A64E5, #C139FF, #FF2DFF)',
+                        border: 'none',
+                        color: '#fff',
+                        fontWeight: 'bold',
+                        padding: '10px 16px',
+                        borderRadius: '8px',
+                        boxShadow: '0 0 10px rgba(255, 45, 255, 0.3)',
+                        textAlign: 'center',
+                        textTransform: 'uppercase',
+                        letterSpacing: '0.5px'
+                      }}
+                      whileHover={{
+                        scale: 1.05,
+                        boxShadow: '0 0 20px rgba(255, 45, 255, 0.5)',
+                      }}
+                    >
+                      Show Images
+                    </motion.button>
+                  )}
                 </div>
               </motion.div>
+
             </motion.div>
           ))}
+
         </motion.div>
       )}
 
