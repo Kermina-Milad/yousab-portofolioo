@@ -17,15 +17,16 @@ const Portfolio = () => {
         const loadData = async () => {
 
         try {
-            fetch(`https://yousab-tech.com/workspace/public/api/clienttrack/28/browse`, {
+            fetch(`https://yousab-tech.com/workspace/public/api/clienttrack/28/browse the portfolio`, {
             method: 'GET',
             headers: {
+
                 'locale': "en"
+
             }
             })
             .then(async (response) => {
                 const data = await response.json();
-                console.log("token", AsyncStorage.getItem("token"));
                 console.log("boula", data.data);
                 setData(data.data);
             })
