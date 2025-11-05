@@ -44,7 +44,7 @@ useEffect(() => {
   const loadData = async () => {
     try {
       const response = await fetch(
-        `https://yousab-tech.com/workspace/public/api/clienttrack/297/browse ${portfolio.title}`,
+        `https://yousab-tech.com/workspace/public/api/clienttrack/297/single ${portfolio.title}`,
         {
           method: "GET",
           headers: {
