@@ -103,25 +103,7 @@ const Portfolio = () => {
       className="container py-5"
       style={{ backgroundColor: "#12183A", minHeight: "100vh" }}
     >
-      <motion.h1
-        className="text-center mb-5"
-        style={{
-          background:
-            "linear-gradient(to right, #3098FE, #4A64E5, #9C46FF, #C139FF, #FF2DFF)",
-          WebkitBackgroundClip: "text",
-          backgroundClip: "text",
-          color: "transparent",
-          fontSize: "3rem",
-          fontWeight: "bold",
-          width: "fit-content",
-          margin: "0 auto",
-        }}
-        initial={{ opacity: 0, y: -30 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8 }}
-      >
-        Yousab Tech
-      </motion.h1>
+
 
       {loading ? (
         <div className="d-flex justify-content-center align-items-center" style={{ height: "60vh" }}>
