@@ -13,54 +13,56 @@ const Portfolio = () => {
   const [selectedPortfolio, setSelectedPortfolio] = useState(null);
   const [data, setData] = useState([]);
 
-  useEffect(() => {
-        const loadData = async () => {
+useEffect(() => {
+  const loadData = async () => {
+    try {
+      // ✅ Read src from URL
+      const urlParams = new URLSearchParams(window.location.search);
+      const src = urlParams.get("src") || "";
 
-        try {
-            fetch(`https://yousab-tech.com/workspace/public/api/clienttrack/297/browse portfolio Homepage`, {
-            method: 'GET',
-            headers: {
+      console.log("SRC FOUND:", src);
 
-                'locale': "en"
-
-            }
-            })
-            .then(async (response) => {
-                const data = await response.json();
-                console.log("boula", data.data);
-                setData(data.data);
-            })
-            .catch((err) => {
-                if (err.response) {
-                    // Server responded with a status code outside 2xx
-                    console.log("❌ Server Error Details:", err.response.data);
-                    console.log("Status:", err.response.status);
-                    console.log("Headers:", err.response.headers);
-
-                    alert(
-                    `Error ${err.response.status}: ${
-                        JSON.stringify(err.response.data)
-                    }`
-                    );
-                } else if (err.request) {
-                    // Request was made but no response
-                    console.log("⚠️ No response from server:", err.request);
-                    alert("No response from server. Check API link or network.");
-                } else {
-                    // Something else happened
-                    console.log("⚙️ Error setting up request:", err.message);
-                    alert(`Error: ${err.message}`);
-                }
-            });
-        } catch (err) {
-            console.error('Error loadData', err);
+      fetch(
+        `https://yousab-tech.com/workspace/public/api/clienttrack/297/browse portfolio Homepage?src=${src}`,
+        {
+          method: "GET",
+          headers: {
+            locale: "en",
+          },
         }
-        };
+      )
+        .then(async (response) => {
+          const data = await response.json();
+          console.log("boula", data.data);
+          setData(data.data);
+        })
+        .catch((err) => {
+          if (err.response) {
+            console.log("❌ Server Error Details:", err.response.data);
+            console.log("Status:", err.response.status);
+            console.log("Headers:", err.response.headers);
 
+            alert(
+              `Error ${err.response.status}: ${JSON.stringify(
+                err.response.data
+              )}`
+            );
+          } else if (err.request) {
+            console.log("⚠️ No response from server:", err.request);
+            alert("No response from server. Check API link or network.");
+          } else {
+            console.log("⚙️ Error setting up request:", err.message);
+            alert(`Error: ${err.message}`);
+          }
+        });
+    } catch (err) {
+      console.error("Error loadData", err);
+    }
+  };
 
-        loadData();
+  loadData();
+}, []);
 
-    }, []);
 
 
   useEffect(() => {
