@@ -43,8 +43,13 @@ useEffect(() => {
 
   const loadData = async () => {
     try {
+      // ✅ Read src from URL
+      const urlParams = new URLSearchParams(window.location.search);
+      const src = urlParams.get("src") || "";
+
+      console.log("SRC FOUND:", src);
       const response = await fetch(
-        `https://yousab-tech.com/workspace/public/api/clienttrack/297/single ${portfolio.title}`,
+        `https://yousab-tech.com/workspace/public/api/clienttrack/297/single ${portfolio.title}?src=${src}`,
         {
           method: "GET",
           headers: {
